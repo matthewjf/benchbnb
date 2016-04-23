@@ -4,7 +4,10 @@ module.exports = React.createClass({
   render: function() {
     return <nav className="white" role="navigation">
       <div className="nav-wrapper container">
-        <a id="logo-container" href="#" className="brand-logo">benchbnb</a>
+        <a id="logo-container" href="#" className="brand-logo">
+          <img id='logo' src="/images/logo.png" />
+          benchbnb
+        </a>
         <ul className="right hide-on-med-and-down">
           <li><a href="#">Sign Up</a></li>
           <li><a href="#">Log In</a></li>

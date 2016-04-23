@@ -32648,6 +32648,7 @@
 	        React.createElement(
 	          "a",
 	          { id: "logo-container", href: "#", className: "brand-logo" },
+	          React.createElement("img", { id: "logo", src: "/images/logo.png" }),
 	          "benchbnb"
 	        ),
 	        React.createElement(

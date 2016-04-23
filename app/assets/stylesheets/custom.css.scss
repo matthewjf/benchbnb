@@ -2,10 +2,6 @@
 $primary-color: color("materialize-brown", "base") !default;
 @import "materialize";
 
-.brand-logo {
-  color: color("brown", "base") !important;
-}
-
 body, html {
   font-size: 16px;
   width: 100%;
@@ -24,6 +20,21 @@ body, html {
 
 #sidebar {
   flex: 60;
+}
+
+#logo {
+  max-height: 40px;
+  margin-right: 10px;
+  vertical-align: -8px;
+}
+
+.brand-logo {
+  color: color("brown", "base") !important;
+  vertical-align: middle;
+}
+
+.logo-container {
+  display: flex;
 }
 
 .container {
