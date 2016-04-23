@@ -25789,7 +25789,8 @@
 /***/ function(module, exports) {
 
 	var BenchConstants = {
-	  BENCHES_RECEIVED: "BENCHES_RECEIVED"
+	  BENCHES_RECEIVED: "BENCHES_RECEIVED",
+	  SET_MARKER: "SET_MARKER"
 	};
 
 	module.exports = BenchConstants;
@@ -25809,18 +25810,18 @@
 	  return _benches;
 	};
 
-	var findBench = function (id) {
-	  for (var prop in _benches) {
-	    if (_benches[prop]['id'] === id) {
-	      return _benches[prop];
-	    }
-	  }
-	};
-
 	var BenchStore = new Store(Dispatcher);
 
 	BenchStore.all = function () {
 	  return Object.assign({}, _benches);
+	};
+
+	BenchStore.findBench = function (id) {
+	  for (var prop in _benches) {
+	    if (_benches[prop]['id'] === parseInt(id)) {
+	      return _benches[prop];
+	    }
+	  }
 	};
 
 	BenchStore.__onDispatch = function (payload) {
@@ -25830,7 +25831,7 @@
 	      BenchStore.__emitChange();
 	      break;
 	    case BenchConstants.SET_MARKER:
-	      // var result = resetBenches(payload.benches);
+	      BenchStore.findBench(payload.benchId).marker = payload.marker;
 	      BenchStore.__emitChange();
 	      break;
 	  }
@@ -32287,7 +32288,8 @@
 
 	var React = __webpack_require__(1),
 	    ApiUtil = __webpack_require__(225),
-	    BenchStore = __webpack_require__(232);
+	    BenchStore = __webpack_require__(232),
+	    IndexItem = __webpack_require__(255);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -32305,18 +32307,12 @@
 	  },
 
 	  render: function () {
-	    var names = [];
-	    Object.keys(this.state.benches).forEach(function (id) {
-	      names.push(this.state.benches[id].description);
+	    var links = Object.keys(this.state.benches).map(function (id) {
+	      return React.createElement(IndexItem, {
+	        bench: this.state.benches[id],
+	        key: this.state.benches[id].title
+	      });
 	    }.bind(this));
-
-	    var links = names.map(function (name) {
-	      return React.createElement(
-	        'li',
-	        { className: 'card bench-item', key: name },
-	        name
-	      );
-	    });
 
 	    return React.createElement(
 	      'div',
@@ -32339,10 +32335,13 @@
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ApiUtil = __webpack_require__(225);
+	var Dispatcher = __webpack_require__(227),
+	    ApiUtil = __webpack_require__(225),
+	    BenchConstants = __webpack_require__(231),
+	    MarkerConstants = __webpack_require__(256);
 
 	var ClientActions = {
-	  fetchBenches: ApiUtil.fetchBenches
+	    fetchBenches: ApiUtil.fetchBenches
 	};
 
 	module.exports = ClientActions;
@@ -32375,7 +32374,8 @@
 	var React = __webpack_require__(1),
 	    BenchStore = __webpack_require__(232),
 	    ClientActions = __webpack_require__(251),
-	    MapUtil = __webpack_require__(254);
+	    MapUtil = __webpack_require__(254),
+	    MarkerStore = __webpack_require__(257);
 
 	/* global google */
 
@@ -32384,14 +32384,22 @@
 
 	  onChange: function () {
 	    var self = this;
-	    var benches = BenchStore.all();
-	    MapUtil.clearMarkers(this.markers);
-	    this.markers = [];
+	    setTimeout(function () {
+	      self.setMarkers();
+	    }, 0);
+	  },
 
-	    Object.keys(benches).forEach(function (id) {
-	      var mark = MapUtil.addMarker(self.map, benches[id]);
-	      self.markers.push(mark);
+	  setMarkers: function () {
+	    var self = this;
+	    var markers = {};
+	    var benches = BenchStore.all();
+
+	    Object.keys(benches).forEach(function (key) {
+	      var mark = MapUtil.addMarker(self.map, benches[key]);
+	      markers[benches[key]['id']] = mark;
 	    });
+
+	    MarkerStore.resetMarkers(markers);
 	  },
 
 	  getBenches: function () {
@@ -32422,7 +32430,6 @@
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    BenchStore.addListener(this.onChange);
-
 	    this.map.addListener('idle', this.getBenches);
 	  },
 
@@ -32477,6 +32484,127 @@
 	    return mark;
 	  }
 	};
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1),
+	    MarkerStore = __webpack_require__(257);
+
+	/* global google */
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  getInitialState: function () {
+	    return { isHovered: false };
+	  },
+
+	  onMouseEnter: function () {
+	    this.setState({ isHovered: true });
+	    var marker = MarkerStore.all()[this.props.bench.id];
+	    marker.setIcon('https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png');
+	    // marker.setAnimation(google.maps.Animation.BOUNCE);
+	  },
+
+	  onMouseLeave: function () {
+	    this.setState({ isHovered: false });
+	    var marker = MarkerStore.all()[this.props.bench.id];
+	    marker.setIcon('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
+	    // marker.setAnimation(null);
+	  },
+
+	  render: function () {
+	    var hoverTransp = this.state.isHovered ? 'hover z-depth-3' : '';
+	    var bench = this.props.bench;
+	    var url = "url(/images/benches/" + bench.id + ".jpg)";
+	    var background = { backgroundImage: url };
+
+	    return React.createElement(
+	      'li',
+	      { className: 'card bench-item',
+	        onMouseEnter: this.onMouseEnter,
+	        onMouseLeave: this.onMouseLeave },
+	      React.createElement(
+	        'div',
+	        { className: 'card-image' },
+	        React.createElement('img', { src: "/images/benches/" + bench.id + ".jpg" })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'card-content' },
+	        React.createElement(
+	          'span',
+	          { className: 'card-title activator grey-text text-darken-3' },
+	          bench.title
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'grey-text' },
+	          bench.description + ' · ',
+	          React.createElement(
+	            'i',
+	            { className: 'tiny material-icons' },
+	            'star_rate'
+	          )
+	        )
+	      ),
+	      React.createElement('div', { className: hoverTransp })
+	    );
+	  }
+	});
+
+/***/ },
+/* 256 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  SET_MARKERS: "SET_MARKERS"
+	};
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(233).Store,
+	    Dispatcher = __webpack_require__(227),
+	    MarkerConstants = __webpack_require__(256);
+
+	var _markers = {};
+
+	var resetMarkers = function (markers) {
+	  _markers = markers;
+	  return _markers;
+	};
+
+	var MarkerStore = new Store(Dispatcher);
+
+	MarkerStore.all = function () {
+	  return Object.assign({}, _markers);
+	};
+
+	MarkerStore.resetMarkers = function (markers) {
+	  for (var prop in _markers) {
+	    if (_markers.hasOwnProperty(prop)) {
+	      _markers[prop].setMap(null);
+	    }
+	  }
+
+	  _markers = markers;
+	  return _markers;
+	};
+
+	MarkerStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case MarkerConstants.SET_MARKERS:
+	      var result = resetMarkers(payload.markers);
+	      MarkerStore.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = MarkerStore;
 
 /***/ }
 /******/ ]);

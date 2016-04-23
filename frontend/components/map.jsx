@@ -1,21 +1,30 @@
 var React = require('react'),
     BenchStore = require('../stores/bench_store'),
     ClientActions = require('../actions/client_actions'),
-    MapUtil = require('../util/map_util');
+    MapUtil = require('../util/map_util'),
+    MarkerStore = require('../stores/marker_store');
 
 /* global google */
 
 module.exports = React.createClass({
   onChange: function(){
     var self = this;
-    var benches = BenchStore.all();
-    MapUtil.clearMarkers(this.markers);
-    this.markers = [];
+    setTimeout(function(){
+      self.setMarkers();
+    },0);
+  },
 
-    Object.keys(benches).forEach(function(id) {
-      var mark = MapUtil.addMarker(self.map, benches[id]);
-      self.markers.push(mark);
+  setMarkers: function() {
+    var self = this;
+    var markers = {};
+    var benches = BenchStore.all();
+
+    Object.keys(benches).forEach(function(key) {
+      var mark = MapUtil.addMarker(self.map, benches[key]);
+      markers[benches[key]['id']] = mark;
     });
+
+    MarkerStore.resetMarkers(markers);
   },
 
   getBenches: function() {
@@ -46,8 +55,6 @@ module.exports = React.createClass({
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     BenchStore.addListener(this.onChange);
-
-
     this.map.addListener('idle',this.getBenches);
   },
 

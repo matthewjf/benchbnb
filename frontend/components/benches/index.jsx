@@ -1,6 +1,7 @@
 var React = require('react'),
     ApiUtil = require('../../util/api_util.js'),
-    BenchStore = require('../../stores/bench_store');
+    BenchStore = require('../../stores/bench_store'),
+    IndexItem = require('./index_item');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -16,14 +17,12 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var names = [];
-    Object.keys(this.state.benches).forEach(function(id) {
-      names.push(this.state.benches[id].description);
+    var links = Object.keys(this.state.benches).map(function(id) {
+      return <IndexItem
+        bench={this.state.benches[id]}
+        key ={this.state.benches[id].title}
+      />;
     }.bind(this));
-
-    var links = names.map(function(name) {
-      return <li className='card bench-item' key={name}>{name}</li>;
-    });
 
     return <div id='sidebar'>
       <div className='sidebar-content'>

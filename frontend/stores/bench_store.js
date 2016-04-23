@@ -9,18 +9,18 @@ var resetBenches = function(benches) {
   return _benches;
 };
 
-var findBench = function(id) {
-  for (var prop in _benches) {
-    if (_benches[prop]['id'] === id) {
-      return _benches[prop];
-    }
-  }
-};
-
 var BenchStore = new Store(Dispatcher);
 
 BenchStore.all = function () {
   return Object.assign({}, _benches);
+};
+
+BenchStore.findBench = function(id) {
+  for (var prop in _benches) {
+    if (_benches[prop]['id'] === parseInt(id)) {
+      return _benches[prop];
+    }
+  }
 };
 
 BenchStore.__onDispatch = function (payload) {
@@ -30,7 +30,7 @@ BenchStore.__onDispatch = function (payload) {
         BenchStore.__emitChange();
         break;
     case BenchConstants.SET_MARKER:
-      // var result = resetBenches(payload.benches);
+        BenchStore.findBench(payload.benchId).marker = payload.marker;
         BenchStore.__emitChange();
         break;
   }

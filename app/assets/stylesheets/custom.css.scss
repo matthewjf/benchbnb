@@ -7,15 +7,15 @@ $primary-color: color("materialize-brown", "base") !default;
 }
 
 body, html {
-  height: 100%;
+  font-size: 16px;
   width: 100%;
+  height: 100%;
 }
 
 #content {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 100vh;
 }
 
 #map {
@@ -32,7 +32,7 @@ body, html {
 
 .sidebar-content {
   overflow-y: auto;
-  height: 100vh;
+  height: calc(100vh - 64px);
 }
 
 .sidebar-list {
@@ -44,14 +44,61 @@ body, html {
 
 .bench-item {
   flex: 1 0 100%;
-  padding: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.card-image {
+  flex-grow: 1;
+  flex: 1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow: hidden;
+  padding-bottom: 70%;
+  img {
+    position: absolute !important;
+    flex-shrink:0;
+    min-width:100%;
+    min-height:100%
+  }
+}
+
+.card-content {
+  flex-grow: 0;
+  padding: 0.5rem 1rem !important;
+  line-height: 1em !important;
+  .card-title {
+    line-height: 1.5em !important;
+  }
+  p {
+    line-height: 1.5em !important;
+  }
+}
+
+.hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,.12);
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.material-icons {
+  vertical-align: middle;
 }
 
 @media all and (min-width: 1200px) {
   .bench-item {
     flex: 1 0 calc(50% - 0.5rem);
     max-width: calc(50% - 0.5rem);
-    flex-flow: row wrap;
   }
 }
 
