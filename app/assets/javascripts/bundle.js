@@ -52,17 +52,39 @@
 	    IndexRoute = __webpack_require__(166).IndexRoute,
 	    hashHistory = __webpack_require__(166).hashHistory;
 
-	var Search = __webpack_require__(252);
+	var Search = __webpack_require__(252),
+	    Header = __webpack_require__(258);
 
-	var routes = React.createElement(Route, { path: '/', component: Search });
+	var App = React.createClass({
+	  displayName: 'App',
+
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'header',
+	        null,
+	        React.createElement(Header, null)
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+
+	var Rtr = React.createElement(
+	  Router,
+	  { history: hashHistory },
+	  React.createElement(
+	    Route,
+	    { path: '/', component: App },
+	    React.createElement(IndexRoute, { component: Search })
+	  )
+	);
 
 	document.addEventListener("DOMContentLoaded", function () {
-
-	  ReactDOM.render(React.createElement(
-	    Router,
-	    { history: hashHistory },
-	    routes
-	  ), document.getElementById('root'));
+	  var root = document.getElementById('root');
+	  ReactDOM.render(Rtr, root);
 	});
 
 /***/ },
@@ -32545,9 +32567,10 @@
 	          bench.description + ' · ',
 	          React.createElement(
 	            'i',
-	            { className: 'tiny material-icons' },
+	            { className: 'tiny material-icons amber-text' },
 	            'star_rate'
-	          )
+	          ),
+	          ' · 12 reviews'
 	        )
 	      ),
 	      React.createElement('div', { className: hoverTransp })
@@ -32605,6 +32628,86 @@
 	};
 
 	module.exports = MarkerStore;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	  displayName: "exports",
+
+	  render: function () {
+	    return React.createElement(
+	      "nav",
+	      { className: "white", role: "navigation" },
+	      React.createElement(
+	        "div",
+	        { className: "nav-wrapper container" },
+	        React.createElement(
+	          "a",
+	          { id: "logo-container", href: "#", className: "brand-logo" },
+	          "benchbnb"
+	        ),
+	        React.createElement(
+	          "ul",
+	          { className: "right hide-on-med-and-down" },
+	          React.createElement(
+	            "li",
+	            null,
+	            React.createElement(
+	              "a",
+	              { href: "#" },
+	              "Sign Up"
+	            )
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            React.createElement(
+	              "a",
+	              { href: "#" },
+	              "Log In"
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          "ul",
+	          { id: "nav-mobile", className: "side-nav" },
+	          React.createElement(
+	            "li",
+	            null,
+	            React.createElement(
+	              "a",
+	              { href: "#" },
+	              "Sign Up"
+	            )
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            React.createElement(
+	              "a",
+	              { href: "#" },
+	              "Log In"
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          "a",
+	          { href: "#", "data-activates": "nav-mobile", className: "button-collapse" },
+	          React.createElement(
+	            "i",
+	            { className: "material-icons" },
+	            "menu"
+	          )
+	        )
+	      )
+	    );
+	  }
+
+	});
 
 /***/ }
 /******/ ]);

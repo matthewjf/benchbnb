@@ -39,7 +39,8 @@ module.exports = React.createClass({
           {bench.title}
         </span>
         <p className='grey-text'>{bench.description + ' · '}
-          <i className="tiny material-icons">star_rate</i>
+          <i className="tiny material-icons amber-text">star_rate</i>
+          {' · 12 reviews'}
         </p>
       </div>
       <div className={hoverTransp}></div>

@@ -6,16 +6,29 @@ var Router = require('react-router').Router,
     IndexRoute = require('react-router').IndexRoute,
     hashHistory = require('react-router').hashHistory;
 
-var Search = require('./components/search');
+var Search = require('./components/search'),
+    Header = require('./components/header');
 
-var routes = (
-  <Route path='/' component={Search}></Route>
+var App = React.createClass({
+  render: function(){
+    return (
+        <div>
+          <header><Header /></header>
+          {this.props.children}
+        </div>
+    );
+  }
+});
+
+var Rtr = (
+  <Router history={hashHistory}>
+    <Route path='/' component={App}>
+      <IndexRoute component={Search} />
+    </Route>
+  </Router>
 );
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  ReactDOM.render(
-    <Router history={hashHistory}>{routes}</Router>,
-    document.getElementById('root')
-  );
+  var root = document.getElementById('root');
+  ReactDOM.render(Rtr, root);
 });
