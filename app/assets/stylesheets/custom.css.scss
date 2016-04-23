@@ -1,0 +1,68 @@
+@import 'materialize/components/color';
+$primary-color: color("materialize-brown", "base") !default;
+@import "materialize";
+
+.brand-logo {
+  color: color("brown", "base") !important;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100vh;
+}
+
+#map {
+  flex: 40;
+}
+
+#sidebar {
+  flex: 60;
+}
+
+.container {
+  width: 100% !important;
+}
+
+.sidebar-content {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.sidebar-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.bench-item {
+  flex: 1 0 100%;
+  padding: 1rem;
+}
+
+@media all and (min-width: 1200px) {
+  .bench-item {
+    flex: 1 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+    flex-flow: row wrap;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .root {
+
+  }
+  #content {
+
+  }
+  #map {
+
+  }
+}
