@@ -1,5 +1,5 @@
 @import 'materialize/components/color';
-$primary-color: color("materialize-brown", "base") !default;
+$primary-color: color("brown", "base") !default;
 @import "materialize";
 
 body, html {
@@ -29,7 +29,7 @@ body, html {
 }
 
 .brand-logo {
-  color: color("brown", "base") !important;
+  color: $primary-color !important;
   vertical-align: middle;
 }
 
@@ -56,6 +56,8 @@ body, html {
 .bench-item {
   flex: 1 0 100%;
 }
+
+/* cards */
 
 .card {
   display: flex;
@@ -91,6 +93,17 @@ body, html {
   }
 }
 
+.description {
+  display: inline-block;
+  color: color('grey', 'base') !important;
+}
+
+.reviews {
+  display: inline-block;
+  float: right;
+  color: color('grey', 'base') !important;
+}
+
 .hover {
   position: absolute;
   left: 0;
@@ -102,10 +115,22 @@ body, html {
   transition: all 0.2s ease;
 }
 
+
+/* icons */
+
 .material-icons {
-  width: auto;
   vertical-align: middle;
+  text-align: right;
+  width: 1.5rem;
+  color: color('amber', 'base');
 }
+
+i.tiny {
+  font-size: 1.5rem !important;
+  vertical-align: text-bottom;
+}
+
+/* mobile */
 
 @media all and (min-width: 1200px) {
   .bench-item {

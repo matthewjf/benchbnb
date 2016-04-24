@@ -32562,15 +32562,23 @@
 	          bench.title
 	        ),
 	        React.createElement(
-	          'p',
-	          { className: 'grey-text' },
-	          bench.description + ' · ',
+	          'div',
+	          null,
 	          React.createElement(
-	            'i',
-	            { className: 'tiny material-icons amber-text' },
-	            'star_rate'
+	            'p',
+	            { className: 'description' },
+	            bench.description
 	          ),
-	          ' · 12 reviews'
+	          React.createElement(
+	            'p',
+	            { className: 'reviews' },
+	            React.createElement(
+	              'i',
+	              { className: 'tiny material-icons' },
+	              'star_rate'
+	            ),
+	            ' · 12 reviews'
+	          )
 	        )
 	      ),
 	      React.createElement('div', { className: hoverTransp })
