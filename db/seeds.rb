@@ -6,11 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-descriptions = [
-  'Entire bench',
-  'Private seat',
-  'Shared'
-]
 
 titles = [
   'Wet',                # 0
@@ -33,5 +28,11 @@ titles = [
 15.times do |i|
   lat = 37.7 + (rand()/10)
   lng = -122.4 - (rand()/10)
-  Bench.create(title: titles[i], description: descriptions.sample, lat: lat, lng: lng)
+  Bench.create(
+    title: titles[i],
+    description: Faker::Hipster.paragraph,
+    seating: rand(8) + 1,
+    lat: lat,
+    lng: lng
+  )
 end

@@ -8,15 +8,15 @@
 
 nav ul a,
 nav .brand-logo {
-  color: #444;
+  color: #795548;
 }
 
 p {
-  line-height: 2rem;
+  line-height: 1.5rem;
 }
 
 .button-collapse {
-  color: #26a69a;
+  color: #000;
 }
 
 .parallax-container {

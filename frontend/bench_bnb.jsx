@@ -7,7 +7,8 @@ var Router = require('react-router').Router,
     hashHistory = require('react-router').hashHistory;
 
 var Search = require('./components/search'),
-    Header = require('./components/header');
+    Header = require('./components/header'),
+    BenchForm = require('./components/benches/bench_form');
 
 var App = React.createClass({
   render: function(){
@@ -24,6 +25,7 @@ var Rtr = (
   <Router history={hashHistory}>
     <Route path='/' component={App}>
       <IndexRoute component={Search} />
+      <Route path='benches/new' component={BenchForm} />
     </Route>
   </Router>
 );

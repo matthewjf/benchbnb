@@ -25,21 +25,21 @@ module.exports = React.createClass({
   render: function() {
     var hoverTransp = (this.state.isHovered ? 'hover z-depth-3' : '');
     var bench = this.props.bench;
-    var url = "url(/images/benches/" + bench.id + ".jpg)";
-    var background = {backgroundImage: url};
+    var seats = (bench.seating > 1 ? 'seats' : 'seat');
+    var benchUrl = (bench.image_urls ? bench.image_urls[0] : '');
 
     return <li className='card bench-item'
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}>
       <div className='card-image'>
-          <img src={"/images/benches/" + bench.id + ".jpg"} />
+          <img src={benchUrl} />
       </div>
       <div className='card-content'>
         <span className='card-title activator grey-text text-darken-3'>
           {bench.title}
         </span>
         <div>
-          <p className='description'>{bench.description}</p>
+          <p className='description'>{bench.seating + ' ' + seats}</p>
           <p className='reviews'>
             <i className="tiny material-icons">star_rate</i>
             {' · 12 reviews'}
