@@ -11,14 +11,16 @@ module.exports = React.createClass({
   onMouseEnter: function() {
     this.setState({isHovered: true});
     var marker = MarkerStore.all()[this.props.bench.id];
-    marker.setIcon('https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png');
+    if (marker)
+      marker.setIcon('https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png');
     // marker.setAnimation(google.maps.Animation.BOUNCE);
   },
 
   onMouseLeave: function() {
     this.setState({isHovered: false});
     var marker = MarkerStore.all()[this.props.bench.id];
-    marker.setIcon('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
+    if (marker)
+      marker.setIcon('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
     // marker.setAnimation(null);
   },
 

@@ -65,8 +65,8 @@ nav {
 
 /* map */
 .fixed-action-btn {
-  left: 61%;
-  bottom: 2%
+  // left: 61%;
+  // bottom: 2%
 }
 
 /* cards */
@@ -184,6 +184,16 @@ img {
 }
 
 .input-field label.active {
+  color: $primary-color !important;
+}
+
+/* cloudinary */
+
+#cloudinary-navbar {
+  border-bottom: 3px solid $primary-color !important;
+}
+
+.widget .panel.local .upload_button_holder {
   color: $primary-color !important;
 }
 

@@ -4,6 +4,10 @@ var React = require('react'),
     hashHistory = require('react-router').hashHistory;
 
 module.exports = React.createClass({
+  addBenchClick: function() {
+    hashHistory.push('/benches/new');
+  },
+
   render: function () {
     return (
       <div id='content'>
@@ -11,8 +15,8 @@ module.exports = React.createClass({
         <Map />
         <div className='fixed-action-btn'>
           <a
-            className="btn-floating btn-large waves-effect waves-light red"
-            onClick={this.history.pushState(null, '/benches/new', {})}>
+            className="btn-floating btn-large waves-effect waves-light brown"
+            onClick={this.addBenchClick}>
             <i className="material-icons">add</i>
             </a>
         </div>

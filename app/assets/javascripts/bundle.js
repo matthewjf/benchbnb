@@ -25467,6 +25467,10 @@
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
+	  addBenchClick: function () {
+	    hashHistory.push('/benches/new');
+	  },
+	
 	  render: function () {
 	    return React.createElement(
 	      'div',
@@ -25479,8 +25483,8 @@
 	        React.createElement(
 	          'a',
 	          {
-	            className: 'btn-floating btn-large waves-effect waves-light red',
-	            onClick: this.history.pushState(null, '/benches/new', {}) },
+	            className: 'btn-floating btn-large waves-effect waves-light brown',
+	            onClick: this.addBenchClick },
 	          React.createElement(
 	            'i',
 	            { className: 'material-icons' },
@@ -25551,7 +25555,12 @@
 	    var mapDOMNode = this.refs.map;
 	    var mapOptions = {
 	      center: { lat: 37.7758, lng: -122.435 },
-	      zoom: 13
+	      zoom: 13,
+	      zoomControl: true,
+	      zoomControlOptions: {
+	        position: google.maps.ControlPosition.TOP_RIGHT
+	      },
+	      streetViewControl: false
 	    };
 	    this.map = new google.maps.Map(mapDOMNode, mapOptions);
 	    BenchStore.addListener(this.onChange);
@@ -32622,14 +32631,14 @@
 	  onMouseEnter: function () {
 	    this.setState({ isHovered: true });
 	    var marker = MarkerStore.all()[this.props.bench.id];
-	    marker.setIcon('https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png');
+	    if (marker) marker.setIcon('https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png');
 	    // marker.setAnimation(google.maps.Animation.BOUNCE);
 	  },
 	
 	  onMouseLeave: function () {
 	    this.setState({ isHovered: false });
 	    var marker = MarkerStore.all()[this.props.bench.id];
-	    marker.setIcon('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
+	    if (marker) marker.setIcon('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
 	    // marker.setAnimation(null);
 	  },
 	
@@ -33219,10 +33228,15 @@
 	    var mapDOMNode = self.refs.map;
 	    var mapOptions = {
 	      center: { lat: 37.7758, lng: -122.435 },
-	      zoom: 13
+	      zoom: 13,
+	      zoomControl: true,
+	      zoomControlOptions: {
+	        position: google.maps.ControlPosition.TOP_RIGHT
+	      },
+	      streetViewControl: false
 	    };
 	    self.map = new google.maps.Map(mapDOMNode, mapOptions);
-	    // this.map.addListener('idle',this.getBenches);
+	
 	    self.map.addListener('click', function (e) {
 	      self.placeMarker(e.latLng, self.map);
 	      self.props.clickCB(e.latLng.lat(), e.latLng.lng());

@@ -51,7 +51,12 @@ module.exports = React.createClass({
     var mapDOMNode = this.refs.map;
     var mapOptions = {
       center: {lat: 37.7758, lng: -122.435},
-      zoom: 13
+      zoom: 13,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+      },
+      streetViewControl: false
     };
     this.map = new google.maps.Map(mapDOMNode, mapOptions);
     BenchStore.addListener(this.onChange);
