@@ -5,6 +5,7 @@ var Dispatcher = require('../dispatcher/dispatcher'),
 
 var ClientActions = {
   fetchBenches: ApiUtil.fetchBenches,
+  createBench: ApiUtil.createBench
 };
 
 module.exports = ClientActions;

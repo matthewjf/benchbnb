@@ -29,8 +29,8 @@ BenchStore.__onDispatch = function (payload) {
       var result = resetBenches(payload.benches);
         BenchStore.__emitChange();
         break;
-    case BenchConstants.SET_MARKER:
-        BenchStore.findBench(payload.benchId).marker = payload.marker;
+    case BenchConstants.CREATE_BENCH:
+        // add bench here
         BenchStore.__emitChange();
         break;
   }

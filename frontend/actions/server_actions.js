@@ -7,6 +7,12 @@ var ServerActions = {
       actionType: BenchConstants.BENCHES_RECEIVED,
       benches: benches
     });
+  },
+  receiveSingleBench: function(bench){
+    Dispatcher.dispatch({
+      actionType: BenchConstants.CREATE_BENCH,
+      bench: bench
+    });
   }
 };
 

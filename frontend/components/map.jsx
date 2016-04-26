@@ -60,7 +60,7 @@ module.exports = React.createClass({
 
   render: function () {
    return (
-       <div id="map" ref='map'/>
+      <div id="map" ref='map' />
    );
  }
 });

@@ -26,5 +26,8 @@ module.exports = {
         loader: "node-loader"
       }
     ]
+  },
+  node: {
+    fs: 'empty'
   }
 };
